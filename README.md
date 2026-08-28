@@ -1,234 +1,513 @@
-# Blog Platform with Comments — Full-Stack Web Application
+# 📝 Blog Platform with Comments
 
-A full-stack, production-grade **Blog Platform with Comments** crafted using **React.js, Vite, Tailwind CSS, Node.js, Express.js, JWT Authentication, and MongoDB**. 
+A full-stack blogging platform where users can register, securely log in, create and manage blog posts, and interact with other users through comments.
 
-This application provides secure user authentication, complete blog post CRUD management, real-time comment interactions, live search & category filtering, a user dashboard, and resource ownership authorization.
+The project demonstrates full-stack development using the **MERN stack**, RESTful APIs, JWT authentication, MongoDB database integration, and role-based resource authorization.
 
 ---
 
-## 🌟 Features
+## 🚀 Features
 
-### 🔐 User Authentication
-- **Secure Registration & Login**: User registration with input validation (name, email, password strength, password confirmation) and hashed password storage via `bcryptjs`.
-- **JWT Authorization**: Token-based authentication with state persistence via React Context API and `localStorage`.
-- **Route & Action Protection**: Private operations (creating/editing/deleting posts, adding/deleting comments) require authentication and ownership verification.
+### 👤 User Authentication
 
-### 📝 Blog Post Management (CRUD)
-- **Create Post**: Rich post creation form with Title, Category, Cover Image URL, and Content.
-- **Edit Post**: Pre-filled update interface restricted exclusively to the post author.
-- **Delete Post**: Confirmation modal dialog protecting against accidental deletion. Automatically cleans up associated post comments.
-- **Home Feed**: Displays published posts in a responsive grid, showcasing cover images, categories, author badges, publication dates, and dynamic comment counts.
+* User registration and login
+* JWT-based authentication
+* Secure password hashing using bcrypt
+* Persistent authentication
+* Protected routes
+* Logout functionality
 
-### 🔍 Search & Filtering
-- **Live Search**: Instant real-time search across post titles, content, and categories.
-- **Category Filter Pills**: Filter articles by `All`, `Technology`, `Programming`, `AI`, `Web Development`, `Lifestyle`, or `Other`.
+### 📝 Blog Management
 
-### 💬 Comment System
-- **Real-Time Commenting**: Authenticated users can leave comments on any blog post.
-- **Comment Ownership**: Users can delete their own comments directly from the post details page.
-- **Dynamic Counters**: Comment counts update automatically across the home page feed, article view, and creator dashboard.
+* Create blog posts
+* View all blog posts
+* View individual blog posts
+* Edit own blog posts
+* Delete own blog posts
+* Category-based organization
+* Search blog posts
+* Display author and publication date
 
-### 📊 Creator Dashboard
-- **User Statistics**: Displays metrics for Total Posts Created and Total Comments Received across articles.
-- **My Articles Table**: Provides quick viewing, editing, and deletion controls for all articles authored by the logged-in user.
+### 💬 Comments
+
+* Add comments to blog posts
+* View comments
+* Delete own comments
+* Comment count for each post
+* User and post association
+
+### 📊 User Dashboard
+
+* View personal blog posts
+* View total posts
+* Manage created posts
+* Edit and delete posts
+* Quick access to create a new post
+
+### 🎨 User Interface
+
+* Modern and clean design
+* Responsive layout
+* Mobile-friendly interface
+* Loading states
+* Error handling
+* Form validation
+* Empty states
+* Responsive navigation
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: React.js (v18) + Vite
-- **Styling**: Tailwind CSS (v4) with custom glassmorphism design system
-- **Routing**: React Router DOM (v6)
-- **HTTP Client**: Axios with request & response interceptors
-- **State Management**: React Context API (`AuthContext`)
-- **Icons**: Lucide React
+
+* React.js
+* Vite
+* Tailwind CSS
+* React Router DOM
+* Axios
+* Context API
 
 ### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js (REST API architecture)
-- **Database**: MongoDB & Mongoose ORM (with in-memory fallback option)
-- **Authentication**: JSON Web Tokens (`jsonwebtoken`) & `bcryptjs`
-- **Security & Config**: CORS & `dotenv`
+
+* Node.js
+* Express.js
+* RESTful APIs
+* JWT
+* bcrypt
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Tools
+
+* Git
+* GitHub
+* VS Code
+* Postman
 
 ---
 
 ## 📂 Project Structure
 
-```
-blog/
-├── backend/
-│   ├── config/
-│   │   └── db.js                 # MongoDB connection logic
-│   ├── controllers/
-│   │   ├── authController.js     # User registration, login, profile handlers
-│   │   ├── postController.js     # Blog CRUD, search, filter, and user posts
-│   │   └── commentController.js  # Add, fetch, and delete comment handlers
-│   ├── middleware/
-│   │   ├── authMiddleware.js     # JWT Bearer token protection middleware
-│   │   └── errorMiddleware.js    # Unified centralized error handling
-│   ├── models/
-│   │   ├── User.js               # Mongoose schema for User
-│   │   ├── Post.js               # Mongoose schema for Post
-│   │   └── Comment.js            # Mongoose schema for Comment
-│   ├── routes/
-│   │   ├── authRoutes.js         # Auth endpoint routes
-│   │   ├── postRoutes.js         # Post & nested comment routes
-│   │   └── commentRoutes.js      # Comment deletion routes
-│   ├── .env                      # Backend environment variables
-│   ├── seed.js                   # Database seeder script
-│   ├── server.js                 # Express app initialization
-│   └── package.json
+```text
+Blog-Platform/
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx        # Responsive navigation bar & drawer
-│   │   │   ├── Footer.jsx        # Application footer
-│   │   │   ├── BlogCard.jsx      # Article preview card
-│   │   │   ├── Comment.jsx       # Single comment item with delete action
-│   │   │   └── ProtectedRoute.jsx# Auth route wrapper
-│   │   ├── context/
-│   │   │   └── AuthContext.jsx   # Global authentication state
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── BlogCard.jsx
+│   │   │   ├── Comment.jsx
+│   │   │   └── ProtectedRoute.jsx
+│   │   │
 │   │   ├── pages/
-│   │   │   ├── Home.jsx          # Hero section, search, filter & post grid
-│   │   │   ├── Login.jsx         # User login page
-│   │   │   ├── Register.jsx      # User registration page
-│   │   │   ├── BlogDetails.jsx   # Full article view & comment system
-│   │   │   ├── CreatePost.jsx    # Article authoring form
-│   │   │   ├── EditPost.jsx      # Article editor form
-│   │   │   └── Dashboard.jsx     # Creator stats & post management
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── BlogDetails.jsx
+│   │   │   ├── CreatePost.jsx
+│   │   │   ├── EditPost.jsx
+│   │   │   └── Dashboard.jsx
+│   │   │
+│   │   ├── context/
+│   │   │   └── AuthContext.jsx
+│   │   │
 │   │   ├── services/
-│   │   │   └── api.js            # Axios configuration & API requests
-│   │   ├── App.jsx               # Application routes setup
-│   │   ├── main.jsx              # React entry point
-│   │   └── index.css             # Design tokens & glassmorphism utilities
-│   ├── .env                      # Frontend environment variables
-│   ├── vite.config.js            # Vite build configuration
+│   │   │   └── api.js
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── .env
 │   └── package.json
+│
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── postController.js
+│   │   └── commentController.js
+│   │
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   └── errorMiddleware.js
+│   │
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Post.js
+│   │   └── Comment.js
+│   │
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── postRoutes.js
+│   │   └── commentRoutes.js
+│   │
+│   ├── .env
+│   ├── server.js
+│   └── package.json
+│
 └── README.md
 ```
 
 ---
 
-## ⚡ Quick Start & Installation
+## ⚙️ Installation
 
-### Prerequisites
-- Node.js (v18+ recommended)
-- npm or yarn
+### 1. Clone the Repository
 
-### 1. Backend Setup
 ```bash
-cd backend
-npm install
-```
+git clone <your-github-repository-url>
 
-Create a `.env` file in the `backend/` directory:
-```env
-PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/blog_platform
-JWT_SECRET=super_secret_jwt_key_blog_platform_2026_safe
+cd Blog-Platform
 ```
-
-#### Seed Database (Optional but Recommended)
-Populate test accounts, sample blog posts, and comments:
-```bash
-npm run seed
-```
-
-#### Start Backend Server
-```bash
-npm start
-```
-The backend API will run at `http://localhost:5000`.
 
 ---
 
-### 2. Frontend Setup
-In a new terminal window:
+## 🔧 Backend Setup
+
+Navigate to the backend folder:
+
 ```bash
-cd frontend
+cd backend
+```
+
+Install dependencies:
+
+```bash
 npm install
 ```
 
-Create a `.env` file in the `frontend/` directory:
+Create a `.env` file:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+The backend will run on:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## 💻 Frontend Setup
+
+Open a new terminal and navigate to the frontend:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-#### Start Frontend Development Server
+Start the frontend:
+
 ```bash
 npm run dev
 ```
-The React application will launch at `http://localhost:3000`.
+
+The frontend will normally run on:
+
+```text
+http://localhost:5173
+```
 
 ---
 
-## 📡 REST API Documentation
+## 🗄️ Database
 
-### 🔑 Authentication APIs
-| Method | Endpoint | Description | Protected | Headers | Body / Query |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| `POST` | `/api/auth/register` | Register a new user | ❌ | `Content-Type: application/json` | `{ name, email, password, confirmPassword }` |
-| `POST` | `/api/auth/login` | Authenticate user & receive JWT token | ❌ | `Content-Type: application/json` | `{ email, password }` |
-| `GET` | `/api/auth/me` | Fetch authenticated user profile | ✅ | `Authorization: Bearer <token>` | None |
+This project uses **MongoDB** as the database.
 
-### 📰 Blog Post APIs
-| Method | Endpoint | Description | Protected | Headers | Body / Query |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| `GET` | `/api/posts` | Fetch all posts (with search & category filters) | ❌ | None | Query: `?search=react&category=Technology` |
-| `GET` | `/api/posts/:id` | Fetch single post by ID | ❌ | None | None |
-| `GET` | `/api/posts/user/my-posts` | Fetch posts authored by current user | ✅ | `Authorization: Bearer <token>` | None |
-| `POST` | `/api/posts` | Create new post | ✅ | `Authorization: Bearer <token>` | `{ title, content, category, image }` |
-| `PUT` | `/api/posts/:id` | Update post (Author owner only) | ✅ | `Authorization: Bearer <token>` | `{ title, content, category, image }` |
-| `DELETE` | `/api/posts/:id` | Delete post & associated comments | ✅ | `Authorization: Bearer <token>` | None |
+The application contains three main collections:
 
-### 💬 Comment APIs
-| Method | Endpoint | Description | Protected | Headers | Body / Query |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| `GET` | `/api/posts/:postId/comments` | Fetch comments for a post | ❌ | None | None |
-| `POST` | `/api/posts/:postId/comments` | Add comment to a post | ✅ | `Authorization: Bearer <token>` | `{ content }` |
-| `DELETE` | `/api/comments/:commentId` | Delete a comment (Owner only) | ✅ | `Authorization: Bearer <token>` | None |
+### User
 
----
+```text
+User
+├── name
+├── email
+├── password
+└── createdAt
+```
 
-## 🗄️ Database Schemas
+### Post
 
-### User Schema
-- `name`: String (Required, trimmed)
-- `email`: String (Required, unique, lowercase, regex validated)
-- `password`: String (Required, min length 6, hashed with bcrypt)
-- `timestamps`: `createdAt`, `updatedAt`
+```text
+Post
+├── title
+├── content
+├── category
+├── image
+├── author
+├── createdAt
+└── updatedAt
+```
 
-### Post Schema
-- `title`: String (Required, trimmed)
-- `content`: String (Required)
-- `category`: String (Required, enum: `['Technology', 'Programming', 'AI', 'Web Development', 'Lifestyle', 'Other']`)
-- `image`: String (Featured image URL)
-- `author`: ObjectId (Reference to `User` model)
-- `timestamps`: `createdAt`, `updatedAt`
+### Comment
 
-### Comment Schema
-- `content`: String (Required, trimmed)
-- `author`: ObjectId (Reference to `User` model)
-- `post`: ObjectId (Reference to `Post` model)
-- `timestamps`: `createdAt`, `updatedAt`
+```text
+Comment
+├── content
+├── author
+├── post
+└── createdAt
+```
+
+The `author` field in posts and comments references the User collection.
 
 ---
 
-## 🚀 Future Improvements
+## 🔐 Authentication
 
-- **Rich Text Editor**: Integration of Quill / Tiptap for formatted post content.
-- **Direct Image Uploads**: Cloudinary or AWS S3 integration for direct image file uploads.
-- **Bookmarks & Likes**: Ability to bookmark articles and like posts/comments.
-- **Nested Comments & Replies**: Threaded conversation hierarchy for comments.
-- **User Profiles**: Public author profile pages showcasing bios and written articles.
-- **Dark / Light Theme Toggle**: Seamless theme switching.
+Authentication is implemented using **JSON Web Tokens (JWT)**.
+
+### Authentication Flow
+
+```text
+User Registration
+       ↓
+Password Hashing
+       ↓
+MongoDB
+       ↓
+User Login
+       ↓
+JWT Token Generated
+       ↓
+Authenticated Requests
+       ↓
+Protected API Routes
+```
+
+Passwords are never stored as plain text.
 
 ---
 
-## 👤 Author
+## 🌐 REST API Endpoints
 
-Developed as a full-stack web application showcasing clean REST API design, robust authentication, database relationships, and modern React user experience.
-#   b l o g  
- 
+### Authentication
+
+| Method | Endpoint             | Description         |
+| ------ | -------------------- | ------------------- |
+| POST   | `/api/auth/register` | Register a new user |
+| POST   | `/api/auth/login`    | Login user          |
+| GET    | `/api/auth/me`       | Get current user    |
+
+### Blog Posts
+
+| Method | Endpoint                   | Description                |
+| ------ | -------------------------- | -------------------------- |
+| GET    | `/api/posts`               | Get all posts              |
+| GET    | `/api/posts/:id`           | Get a single post          |
+| POST   | `/api/posts`               | Create a post              |
+| PUT    | `/api/posts/:id`           | Update own post            |
+| DELETE | `/api/posts/:id`           | Delete own post            |
+| GET    | `/api/posts/user/my-posts` | Get logged-in user's posts |
+
+### Comments
+
+| Method | Endpoint                      | Description        |
+| ------ | ----------------------------- | ------------------ |
+| GET    | `/api/posts/:postId/comments` | Get post comments  |
+| POST   | `/api/posts/:postId/comments` | Add a comment      |
+| DELETE | `/api/comments/:commentId`    | Delete own comment |
+
+---
+
+## 🔒 Authorization
+
+The application verifies ownership before allowing users to modify content.
+
+For example:
+
+```text
+User A
+   ↓
+Creates Post A
+
+User B
+   ↓
+Can View Post A
+   ↓
+Cannot Edit Post A
+   ↓
+Cannot Delete Post A
+```
+
+This prevents unauthorized modification of other users' content.
+
+---
+
+## 🧪 API Testing
+
+The REST APIs can be tested using **Postman**.
+
+Important APIs to test:
+
+* User Registration
+* User Login
+* Get Current User
+* Create Post
+* Get Posts
+* Get Single Post
+* Update Post
+* Delete Post
+* Add Comment
+* Get Comments
+* Delete Comment
+
+---
+
+## 📱 Application Pages
+
+### Home Page
+
+Displays the latest blog posts with search and category filtering.
+
+### Register Page
+
+Allows new users to create an account.
+
+### Login Page
+
+Allows registered users to authenticate.
+
+### Blog Details Page
+
+Displays the complete blog post and its comments.
+
+### Create Post Page
+
+Allows authenticated users to publish new posts.
+
+### Edit Post Page
+
+Allows users to update their own posts.
+
+### Dashboard
+
+Allows users to manage their posts and view basic statistics.
+
+---
+
+## 🔍 Search and Filtering
+
+Users can search blog posts based on:
+
+* Title
+* Content
+* Category
+
+Posts can also be filtered by categories such as:
+
+* Technology
+* Programming
+* Artificial Intelligence
+* Web Development
+* Lifestyle
+* Other
+
+---
+
+## 🛡️ Security Features
+
+* Password hashing with bcrypt
+* JWT authentication
+* Protected API routes
+* Ownership validation
+* Environment variables for sensitive information
+* Request validation
+* Proper HTTP status codes
+* CORS configuration
+* Passwords excluded from API responses
+
+---
+
+## 🔮 Future Improvements
+
+The following features can be added in future versions:
+
+* Rich text editor
+* Image upload
+* Likes and bookmarks
+* Nested comments and replies
+* User profile pages
+* Admin dashboard
+* Post tags
+* Pagination
+* Email verification
+* Password reset
+* Social login
+* Dark/light mode
+* Post sharing
+* Notifications
+
+---
+
+## 🎯 Learning Outcomes
+
+This project helped demonstrate practical knowledge of:
+
+* Full-stack web development
+* React component development
+* RESTful API development
+* CRUD operations
+* MongoDB database integration
+* Mongoose relationships
+* JWT authentication
+* Password hashing
+* Protected routes
+* Authorization and ownership
+* API integration using Axios
+* State management with Context API
+* Responsive UI development
+* API testing using Postman
+
+---
+
+## 📌 Project Status
+
+**Status:** Completed ✅
+
+The project implements the core requirements of a full-stack blogging platform with authentication, blog management, and user comments.
+
+---
+
+## 👨‍💻 Author
+
+**Praveen**
+
+B.Tech Information Technology
+Jeppiaar Engineering College
+
+---
+
+## 📄 License
+
+This project is created for educational and internship purposes.
